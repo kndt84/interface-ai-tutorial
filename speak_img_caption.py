@@ -29,8 +29,8 @@ DIC="/var/lib/mecab/dic/open-jtalk/naist-jdic"
 VOICE="/usr/share/hts-voice/mei/mei_normal.htsvoice"
 
 
-def create_audio_file(caption, WAV_FILE):
-    os.system('echo "%s" | open_jtalk -m %s -x %s -ow %s' % (caption, VOICE, DIC, WAV_FILE))
+def create_audio_file(caption, voice_file, dic_file, wav_file):
+    os.system('echo "%s" | open_jtalk -m %s -x %s -ow %s' % (caption, voice_file, dic_file, wav_file))
 
 
 def save_camera_image(img_file_path):
@@ -82,8 +82,8 @@ def analyze_stored_image(img_file_path):
     return process_request(json, data, headers, params)
 
 
-def analyze_url_image(urlImage):
-    json = {'url': urlImage}
+def analyze_url_image(image_url):
+    json = {'url': image_url}
     data = None
     headers = dict()
     headers['Ocp-Apim-Subscription-Key'] = CV_KEY
@@ -93,9 +93,9 @@ def analyze_url_image(urlImage):
 
 
 def get_access_token(access_key):
-    access_token_uri = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken"
+    access_token_url = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken"
     headers = {"Ocp-Apim-Subscription-Key": access_key}
-    res = requests.request('POST', access_token_uri, headers=headers)
+    res = requests.request('POST', access_token_url, headers=headers)
     return res.text
 
 
@@ -105,8 +105,8 @@ def get_translation(caption, access_token):
     params = {"from":"en-us", "to":"ja-jp",
               "maxTranslations":1000,
               "text": caption}
-    translator_uri = "https://api.microsofttranslator.com/v2/http.svc/GetTranslations"
-    res = requests.request("POST", translator_uri, headers=headers, params=params)
+    translator_url = "https://api.microsofttranslator.com/v2/http.svc/GetTranslations"
+    res = requests.request("POST", translator_url, headers=headers, params=params)
     return extract_transleted_text(res.text)
 
 
@@ -118,13 +118,13 @@ def extract_transleted_text(xml_string):
 def request_audio_file(caption, access_token):
     data = "<speak version='1.0' xml:lang='en-us'><voice xml:lang='en-us' xml:gender='Female' name='Microsoft Server Speech Text to Speech Voice (en-US, ZiraRUS)'>%s</voice></speak>" % caption
     headers = {"Content-type": "application/ssml+xml", 
-            "X-Microsoft-OutputFormat": "riff-16khz-16bit-mono-pcm", 
-            "Authorization": "Bearer " + access_token, 
-            "X-Search-AppId": "07D3234E49CE426DAA29772419F436CA", 
-            "X-Search-ClientID": "1ECFAE91408841A480F00935DC390960", 
-            "User-Agent": "TTSForPython"}
-    bing_speech_uri = "https://speech.platform.bing.com/synthesize"
-    res = requests.request("POST", bing_speech_uri, data=data, headers=headers)
+               "X-Microsoft-OutputFormat": "riff-16khz-16bit-mono-pcm", 
+               "Authorization": "Bearer " + access_token, 
+               "X-Search-AppId": "07D3234E49CE426DAA29772419F436CA", 
+               "X-Search-ClientID": "1ECFAE91408841A480F00935DC390960", 
+               "User-Agent": "TTSForPython"}
+    bing_speech_url = "https://speech.platform.bing.com/synthesize"
+    res = requests.request("POST", bing_speech_url, data=data, headers=headers)
     return res.content
 
 
@@ -152,8 +152,7 @@ def get_audio_info(wav_file_path):
     return audio_info
 
 
-if __name__ == '__main__':
-
+def main():
     print("Save camera image")
     save_camera_image(IMG_FILE)
 
@@ -181,3 +180,14 @@ if __name__ == '__main__':
 
     print("Play caption audio")
     play_audio(WAV_FILE)
+
+
+if __name__ == '__main__':
+
+    while True:
+        main()
+        sleep(10)
+
+
+
+

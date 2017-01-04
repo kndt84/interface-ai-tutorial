@@ -18,9 +18,9 @@ scorer=Scorer("Task")
 # Free: https://www.microsoft.com/cognitive-services/en-us/subscriptions
 # Paid: https://portal.azure.com/#create/Microsoft.CognitiveServices/apitype/Bing.Speech/pricingtier/S0
 # Here you have to paste your primary key
-CV_KEY = '7733a2c4fe314dd590a1c1d8d9503eee'
-SPEECH_KEY = "38cff4c6e50e41c482f612089b5ab8e0"
-TRANSLATOR_KEY = "e02194a705804ee896661e139aea7e28"
+CV_KEY = ""
+SPEECH_KEY = ""
+TRANSLATOR_KEY = ""
 
 # Set file paths
 WAV_FILE="./tmp.wav"
@@ -47,8 +47,7 @@ def process_request(json, data, headers, params):
     result = None
 
     while True:
-        response = requests.request('POST', _url, json=json, data=data,
-                                    headers=headers, params=params )
+        response = requests.request('POST', _url, json=json, data=data, headers=headers, params=params )
         if response.status_code == 429: 
             print( "Message: %s" % ( response.json()['error']['message'] ) )
             if retries <= _max_num_retries: 

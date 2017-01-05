@@ -178,10 +178,11 @@ def main():
 #    save_audio(wav_data, wav_file_path)
 
     print("Play caption audio")
+    play_audio("blank.wav")
     play_audio(WAV_FILE)
 
 
 if __name__ == '__main__':
     while True:
         main()
-        time.sleep(10)
+        time.sleep(5)

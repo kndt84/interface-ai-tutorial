@@ -10,7 +10,6 @@ import cv2
 from scorer_sdk.Scorer import Scorer
 import xml.etree.ElementTree as ET
 
-
 # Create SCORER SDK object
 scorer=Scorer("Task")
 
@@ -40,7 +39,7 @@ def save_camera_image(img_file_path):
     cv2.imwrite(img_file_path, bgr)
 
 
-def process_request(json, data, headers, params):
+def process_cv_request(json, data, headers, params):
     _max_num_retries = 10
     _url = 'https://api.projectoxford.ai/vision/v1.0/analyze/'
     retries = 0
@@ -72,24 +71,24 @@ def process_request(json, data, headers, params):
     return result['description']['captions'][0]['text']
 
 
-def analyze_stored_image(img_file_path):
+def caption_stored_image(img_file_path):
     json = None
     data = open(img_file_path, 'rb').read()
     headers = dict()
     headers['Ocp-Apim-Subscription-Key'] = CV_KEY
     headers['Content-Type'] = 'application/octet-stream'
     params = { 'visualFeatures' : 'Description'}
-    return process_request(json, data, headers, params)
+    return process_cv_request(json, data, headers, params)
 
 
-def analyze_url_image(image_url):
+def caption_url_image(image_url):
     json = {'url': image_url}
     data = None
     headers = dict()
     headers['Ocp-Apim-Subscription-Key'] = CV_KEY
     headers['Content-Type'] = 'application/json'
     params = {'visualFeatures': 'Description'}
-    return process_request(json, data, headers, params)
+    return process_cv_request(json, data, headers, params)
 
 
 def get_access_token(access_key):
@@ -157,7 +156,7 @@ def main():
     save_camera_image(IMG_FILE)
 
     print("Caption the image")
-    caption = analyze_stored_image(IMG_FILE)
+    caption = caption_stored_image(IMG_FILE)
     print("Caption: " + caption)
 
     print ("Connect to server to get the access token")

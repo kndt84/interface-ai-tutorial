@@ -17,15 +17,15 @@ scorer=Scorer("Task")
 # Free: https://www.microsoft.com/cognitive-services/en-us/subscriptions
 # Paid: https://portal.azure.com/#create/Microsoft.CognitiveServices/apitype/Bing.Speech/pricingtier/S0
 # Here you have to paste your primary key
-CV_KEY = ""
-SPEECH_KEY = ""
-TRANSLATOR_KEY = ""
+CV_KEY = "7733a2c4fe314dd590a1c1d8d9503eee"
+SPEECH_KEY = "38cff4c6e50e41c482f612089b5ab8e0"
+TRANSLATOR_KEY = "e02194a705804ee896661e139aea7e28"
 
 # Set file paths
-WAV_FILE="./tmp.wav"
-IMG_FILE="./image.jpg"
-DIC="/var/lib/mecab/dic/open-jtalk/naist-jdic"
-VOICE="/usr/share/hts-voice/mei/mei_normal.htsvoice"
+WAV_FILE = "./tmp.wav"
+IMG_FILE = "./image.jpg"
+DIC_FILE = "/var/lib/mecab/dic/open-jtalk/naist-jdic"
+VOICE_FILE = "/usr/share/hts-voice/mei/mei_normal.htsvoice"
 
 
 def create_audio_file(caption, voice_file, dic_file, wav_file):
@@ -168,7 +168,7 @@ def main():
     print("Translated text: " + transleted_caption)
 
     print ("Create audio file")
-    create_audio_file(transleted_text, WAV_FILE)
+    create_audio_file(transleted_caption, VOICE_FILE, DIC_FILE, WAV_FILE)
 
     # Create English WAVE file
 #    print ("Connect to server to get the access token")
@@ -184,4 +184,4 @@ def main():
 if __name__ == '__main__':
     while True:
         main()
-        sleep(10)
+        time.sleep(10)

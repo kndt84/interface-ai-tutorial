@@ -45,7 +45,7 @@ def caption_stored_image(img_file_path):
     try: 
         response = requests.request("POST", _url, json=json, data=data, headers=headers, params=params)
         result = response.json()
-        return result
+        return result["description"]["captions"][0]["text"]
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 

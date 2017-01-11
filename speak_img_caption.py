@@ -6,7 +6,7 @@ import wave
 import pygame
 import time
 import cv2
-from scorer_sdk.Scorer import Scorer
+from scorer import Scorer
 import xml.etree.ElementTree as ET
 
 # Create SCORER SDK object

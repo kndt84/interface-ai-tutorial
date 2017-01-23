@@ -27,10 +27,14 @@ VOICE_FILE = "/usr/share/hts-voice/mei/mei_normal.htsvoice"
 
 
 def save_camera_image(img_file_path):
-    frame = cap.read()
-    bgr = frame.get_bgr()
-    cv2.imwrite(img_file_path, bgr)
-
+    while True:
+        frame = cap.read()
+        if frame != None:
+            bgr = frame.get_bgr()
+            cv2.imwrite(img_file_path, bgr)
+        else:
+            continue
+            
 
 def caption_stored_image(img_file_path):
     _url =　"https://api.projectoxford.ai/vision/v1.0/analyze/"

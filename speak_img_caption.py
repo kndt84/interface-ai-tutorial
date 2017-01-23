@@ -6,11 +6,11 @@ import wave
 import pygame
 import time
 import cv2
-from scorer import Scorer
+import Scorer
 import xml.etree.ElementTree as ET
 
 # Create SCORER SDK object
-scorer=Scorer("Task")
+cap = scorer.VideoCapture(0)
 
 # Note: The way to get api key:
 # Free: https://www.microsoft.com/cognitive-services/en-us/subscriptions
@@ -27,8 +27,7 @@ VOICE_FILE = "/usr/share/hts-voice/mei/mei_normal.htsvoice"
 
 
 def save_camera_image(img_file_path):
-    scorer.poll()
-    frame = scorer.get_frame()
+    frame = cap.read()
     bgr = frame.get_bgr()
     cv2.imwrite(img_file_path, bgr)
 

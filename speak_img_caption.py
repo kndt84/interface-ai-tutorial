@@ -32,6 +32,7 @@ def save_camera_image(img_file_path):
         if frame != None:
             bgr = frame.get_bgr()
             cv2.imwrite(img_file_path, bgr)
+            break
         else:
             continue
             

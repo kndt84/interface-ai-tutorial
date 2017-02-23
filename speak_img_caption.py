@@ -38,7 +38,7 @@ def save_camera_image(img_file_path):
             
 
 def caption_stored_image(img_file_path):
-    _url =　"https://api.projectoxford.ai/vision/v1.0/analyze/"
+    _url = "https://api.projectoxford.ai/vision/v1.0/analyze/"
     json = None
     data = open(img_file_path, "rb").read()
     headers = dict()

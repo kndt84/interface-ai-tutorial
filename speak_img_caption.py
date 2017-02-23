@@ -78,7 +78,7 @@ def extract_transleted_text(xml_string):
 
 
 def create_audio_file(caption, voice_file, dic_file, wav_file):
-    os.system("echo "%s" | open_jtalk -m %s -x %s -ow %s" % (caption, voice_file, dic_file, wav_file))
+    os.system("echo '%s' | open_jtalk -m %s -x %s -ow %s" % (caption, voice_file, dic_file, wav_file))
 
 
 def play_audio(wav_file_path):
